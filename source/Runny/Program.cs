@@ -5,6 +5,7 @@ using Runny.Commands;
 using Runny.Handlers;
 using System;
 using System.ServiceModel;
+using Topshelf;
 
 namespace Runny
 {
@@ -12,27 +13,19 @@ namespace Runny
     {
         static void Main(string[] args)
         {
-            var configuration = new ServiceLayerConfiguration
-                (
-                    requestHandlersAssembly: typeof(EchoHandler).Assembly,
-                    requestsAndResponsesAssembly: typeof(EchoRequest).Assembly,
-                    containerImplementation: typeof(Container)
-                );
-            configuration.Initialize();
-
-            var host = new ServiceHost(typeof(WcfRequestProcessor));
-            Console.WriteLine("Apertura host...");
-            host.Open();
-            Console.WriteLine("Host aperto...");
-
-            Console.ReadLine();
-            host.Close();
-            Console.WriteLine("Host chiuso...");
-
-            Console.WriteLine("Premere un tasto per continuare...");
-            Console.ReadLine();
+            HostFactory.Run(x =>                                 
+            {
+                x.Service<RunnyHostService>(s => 
+                        {
+                            s.ConstructUsing(name => new RunnyHostService());
+                            s.WhenStarted(h => h.Start());
+                            s.WhenStopped(h => h.Stop());
+                        });
+                
+                x.SetDescription("Runny host to serve application's install/update/uninstall request");        
+                x.SetDisplayName("Runny");                       
+                x.SetServiceName("Runny");                       
+            });                                                  
         }
     }
-
-
 }
