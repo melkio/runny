@@ -1,6 +1,7 @@
 ﻿using Agatha.ServiceLayer;
 using Agatha.ServiceLayer.WCF;
 using Agatha.StructureMap;
+using Common.Logging;
 using Runny.Commands;
 using Runny.Handlers;
 using System;
@@ -11,6 +12,8 @@ namespace Runny
 {
     class RunnyHostService 
     {
+        static ILog Log = LogManager.GetCurrentClassLogger();
+
         readonly ServiceHost _host;
 
         public RunnyHostService()
@@ -28,12 +31,16 @@ namespace Runny
 
         public void Start()
         {
+            Log.Info(m => m("Attempting to start service to host runny..."));
             _host.Open();
+            Log.Info(m => m("Started service that host runny"));
         }
 
         public void Stop()
         {
+            Log.Info(m => m("Attempting to stop service that host runny..."));
             _host.Close();
+            Log.Info(m => m("Stopped service that host runny"));
         }
     }
 }
