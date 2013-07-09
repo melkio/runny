@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EchoCommand.cs" />
+    <Compile Include="GetLastVersionCommand.cs" />
     <Compile Include="InstallCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

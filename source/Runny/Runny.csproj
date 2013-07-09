@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Handlers\EchoHandler.cs" />
+    <Compile Include="Handlers\GetLastestVersionHandler.cs" />
     <Compile Include="Handlers\InstallHandler.cs" />
     <Compile Include="PackageExtensionMethods.cs" />
     <Compile Include="Program.cs" />
